@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSString+Guid.h"
 
 // BLOCK STRUCTURE PASSED AS ARGUMENT
 void doSomethingWithTheBlock(void (^myBlock)(NSString *)) {
-    
+    myBlock(@"Block call");
+}
+void mutateFunc(void (^mutator)()) {
+    mutator();
 }
 
 int main(int argc, const char * argv[]) {
@@ -23,6 +27,20 @@ int main(int argc, const char * argv[]) {
         };
         doSomethingWithTheBlock(myBlock);
         
+        // BLOCK DEFINITION INLINE
+        void (^anotherBlock)(NSString *x) = ^(NSString *x) { NSLog(@"Inline %@",x); };
+        doSomethingWithTheBlock(anotherBlock);
+        
+        // MUTATE A VALUE FROM OUTSIDE SCOPE USING BLOCKS
+        __block NSString *result = @"First status";
+        void (^mutator)() = ^ { result = @"A new one status"; };
+        NSLog(@"%@", result);
+        mutateFunc(mutator);
+        NSLog(@"%@", result);
+        
+        // CATEGORY CUSTOM EXTENSION TO ANY CLASS
+        NSString *guid = [NSString stringWithUUID];
+        NSLog(@"%@",guid);
         
         
         
@@ -30,3 +48,10 @@ int main(int argc, const char * argv[]) {
     }
     return 0;
 }
+
+
+
+
+
+
+
