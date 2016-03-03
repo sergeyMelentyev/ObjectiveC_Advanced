@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
         mutateFunc(mutator);
         NSLog(@"%@", result);
         
-        // CATEGORY CUSTOM EXTENSION TO ANY CLASS
+        // CATEGORY. EXTENSION TO ANY CLASS
         NSString *guid = [NSString stringWithUUID];
         NSLog(@"%@",guid);
         
